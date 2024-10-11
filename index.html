@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyra_MSS_AMT (Main Page)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+        .content-container {
+            max-width: 1312px;
+            margin: 100px auto 0 auto; /* 100px top margin, auto left and right margins */
+            text-align: center; /* Centers content horizontally within the container */
+            border: 1px solid #ffffff;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            border: 0px solid #3E65B9;
+            width: 900px; /* Set width */
+            padding: 10px;
+            margin: 0 auto; /* Center the element horizontally */
+        }
+
+        .subtitle {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 16px;
+            font-weight: 100;
+            color: #000000;
+            padding: 0px;
+            border: 0px solid #ffffff;
+            background-color: #ffffff;
+            width: 60%;
+            text-align: center;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .button-container {
+            max-width: 600px;
+            margin: 0 auto; /* This centers the entire container */
+            text-align: center; /* Centers content horizontally within the container */
+            border: 0px solid #ffffff;
+        }
+
+        .button {
+            background-color:  #fdf6d7;
+            font-family: 'Anonymous Pro', monospace;
+            color: #000000; /* Active button text color */
+            border: 1px solid #000000;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 25px;
+            cursor: pointer;
+            margin: 20px;
+            display: inline-block; /* Make buttons behave like inline elements */
+        }
+
+        /* Hover effects for both buttons */
+        .button:hover {
+            font-family: 'Anonymous Pro', monospace;
+            color: #ffffff; /* Active button text color */
+            background-color: #3e65b9;
+            border: 1px solid #E7E7E7;
+        }
+        
+        /* Footnote styling */
+        .footnote {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 15px;
+            color: #3E65B9;
+            text-align: center;
+        }
+
+        /* Common margin class for all elements */
+        .margin {
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-container">
+        <div class="page-title margin">Deep learning approaches to source separation and <br>
+            transcription of Cretan dance tunes</div>
+        
+        <div class="subtitle margin">
+            <p>Click on a button below to navigate to a page: <br>
+            1. Music Source Separation for Cretan Lyra (MSS System) <br>
+            2. Automatic Music Transcription for Cretan Lyra (AMT System) </p>
+        </div>
+
+        <div class="button-container">
+            <!-- Button to navigate to MSS page -->
+            <button class="button margin" onclick="window.location.href='MSS_index.html'">MSS System</button>
+            <!-- Button to navigate to AMT page -->
+            <button class="button margin" onclick="window.location.href='AMT_index.html'">AMT System</button>
+            
+        </div>
+        <div class="footnote margin">(Created by <b>Emmanouil Sifakis</b>)</div>
+    </div>
+</body>
+</html>

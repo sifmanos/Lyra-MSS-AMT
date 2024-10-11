@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.min.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyra_MSS_AMT (MSS Page)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Anonymous Pro', monospace;
+        }
+
+        .content-container {
+            max-width: 1312px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .page-title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .dataset-title {
+            font-size: 25px;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: -20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .tab-content {
+            display: none; /* Hide by default */
+        }
+
+        .tab-content.active {
+            display: block; /* Show the active tab content */
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            font-family: 'Anonymous Pro', monospace;
+            padding: 10px 20px;
+            margin: 0 5px;
+            margin-top: 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #fdf6d7; /* Original button background color */
+            border: 1px solid #000000; /* Original border color */
+            border-radius: 5px;
+            color: #000000; /* Original button text color */
+            transition: background-color 0s, color 0s;
+        }
+
+        .tab-button.active {
+            background-color: #3e65b9; /* Active button background color */
+            color: #fff; /* Active button text color */
+            border: 1px solid #E7E7E7;
+            border-radius: 5px;
+        }
+
+        .author {
+            font-size: 18px;
+            color: #212a7e;
+            margin-bottom: 20px;
+        }
+
+        .small_subtitle {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 16px;
+            color: #000000;
+            text-align: center;
+            margin-top: 47px;
+            margin-bottom: -33px;
+        }
+
+        .subtitle {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 16px;
+            color: #000000;
+            margin: 0px auto; /* Center the box horizontally */
+            padding: 0px; /* Add space inside the box */
+            border: 1px solid #ffffff; /* Add a border around the box */
+            background-color: #ffffff; /* Add a background color */
+            width: 60%; /* Set the width of the box */
+            text-align: center;
+            border-radius: 10px; /* Optional: Add rounded corners */
+            margin-top: 30px
+        }
+
+        .audio-player-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center the players within the container */
+            gap: 20px; /* Space between the players */
+            padding: 25px 0;
+        }
+
+        /* Styling for each audio player instance */
+        .audio-player-instance {
+            max-width: 800px;
+            flex: 1 1 30%; /* Responsive size with a basis of 30% */
+            margin: 15px;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: #fff;
+            margin-top: -20px;
+        }
+
+        .title {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 17px;
+            color: #333;
+            text-align: left;
+        }
+
+        .audio-name {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        
+        .top-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .playback-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .playback-controls button {
+            font-size: 20px;
+            width: 30px;
+            height: 30px;
+            margin: 0px;
+            padding: 0;
+            border-radius: 1px;
+            color: rgb(0, 0, 0);
+            background-color: #ffffff;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .active-playback {
+            border: 2px solid black;
+        }
+
+        .time-display {
+            font-family: 'Anonymous Pro', monospace;
+            margin-left: 10px;
+            padding: 4px;
+            border: 1px solid #ffffff;
+            background-color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        .waveform-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: -70px;
+            margin-top: -15px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            margin-right: 15px;
+        }
+
+        .small-button {
+            font-family: 'Anonymous Pro', monospace;
+            padding: 2px 5px;
+            margin: 2px 0;
+            font-size: 0.8rem;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .small-button.solo {
+            background-color: #fcf3cf;
+        }
+
+        .small-button.mute {
+            background-color: #fadbd8;
+        }
+
+        .active {
+            border: 1.4px solid rgb(2, 2, 2);
+            background-color: #ffffff;
+            border-radius: 0px;
+        }
+
+        /* Adjust the waveforms to dynamically fit the container */
+        .waveform {
+            flex-grow: 1;
+            height: 200px; /* Maintain original height */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Footnote styling */
+        .footnote {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 15px;
+            color: #3E65B9;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+    <body>
+        <div class="content-container">
+            <div class="page-title">Music Source Separation for Cretan Lyra</div>
+    
+            <!-- Crete2019 Dataset Container -->
+            <div class="dataset-container" id="crete2019">
+                <div class="dataset-title">Crete2019 Dataset</div>
+    
+                <!-- Tab buttons -->
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="switchTab('sample_8')">Sample 008</button>
+                    <button class="tab-button" onclick="switchTab('sample_11')">Sample 011</button>
+                    <button class="tab-button" onclick="switchTab('sample_16')">Sample 016</button>
+                </div>
+    
+                <!-- Tab content: Sample 8 -->
+                <div id="sample_8" class="tab-content active">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_msk_lyra.wav" data-audio2="MSS_audio/8_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 5.11dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmx_lyra.wav" data-audio2="MSS_audio/8_unmx_lute.wav" data-title="Open-UNMX" data-subtitle="SI-SDR = 5.98dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmxC_lyra.wav" data-audio2="MSS_audio/8_unmxC_lute.wav" data-title="Open-UNMX+Chimera" data-subtitle="SI-SDR = 5.23dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                    </div>
+                </div>
+    
+                <!-- Tab content: Sample 11 -->
+                <div id="sample_11" class="tab-content">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_msk_lyra.wav" data-audio2="MSS_audio/11_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 4.65dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmx_lyra.wav" data-audio2="MSS_audio/11_unmx_lute.wav" data-title="Open-UNMX"  data-subtitle="SI-SDR = 7.04dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmxC_lyra.wav" data-audio2="MSS_audio/11_unmxC_lute.wav" data-title="Open-UNMX+Chimera"  data-subtitle="SI-SDR = 4.13dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                    </div>
+                </div>
+    
+                <!-- Tab content: Sample 16 -->
+                <div id="sample_16" class="tab-content">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_msk_lyra.wav" data-audio2="MSS_audio/16_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 3.79dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmx_lyra.wav" data-audio2="MSS_audio/16_unmx_lute.wav" data-title="Open-UNMX"  data-subtitle="SI-SDR = 5.99dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmxC_lyra.wav" data-audio2="MSS_audio/16_unmxC_lute.wav" data-title="Open-UNMX+Chimera"  data-subtitle="SI-SDR = 3.18dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Sousta Dataset Container -->
+            <div class="dataset-container" id="sousta">
+                <div class="dataset-title">S0USTA Dataset</div>
+    
+                <!-- Tab buttons -->
+                <div class="tab-buttons">
+                    <button class="tab-button active" onclick="switchTab('sample_27')">Sample 027</button>
+                    <button class="tab-button" onclick="switchTab('sample_289')">Sample 289</button>
+                    <button class="tab-button" onclick="switchTab('sample_270')">Sample 270</button>
+                </div>
+    
+                <!-- Tab content: Sample 27 -->
+                <div id="sample_27" class="tab-content active">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/027_msk_lyra.wav" data-audio2="MSS_audio/027_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/027_unmx_lyra.wav" data-audio2="MSS_audio/027_unmx_lute.wav" data-title="Open-UNMX"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/027_unmxC_lyra.wav" data-audio2="MSS_audio/027_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
+                    </div>
+                </div>
+    
+                <!-- Tab content: Sample 289 -->
+                <div id="sample_289" class="tab-content">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/289_msk_lyra.wav" data-audio2="MSS_audio/289_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/289_unmx_lyra.wav" data-audio2="MSS_audio/289_unmx_lute.wav" data-title="Open-UNMX"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/289_unmxC_lyra.wav" data-audio2="MSS_audio/289_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
+                    </div>
+                </div>
+    
+                <!-- Tab content: Sample 270 -->
+                <div id="sample_270" class="tab-content">
+                    <div class="audio-player-container">
+                        <div class="audio-player-instance" data-audio1="MSS_audio/270_msk_lyra.wav" data-audio2="MSS_audio/270_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/270_unmx_lyra.wav" data-audio2="MSS_audio/270_unmx_lute.wav" data-title="Open-UNMX"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/270_unmxC_lyra.wav" data-audio2="MSS_audio/270_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="subtitle">
+            <p style="text-align: justify;">This webpage demonstrates Music Source Separation (MSS) applied to Cretan dance tunes for estimating the lyra stem. 
+                Various deep learning (DL) techniques are used for this MSS task, specifically the <b><a href="https://arxiv.org/pdf/1502.04149" target="_blank">Mask-Inference (MSK)</a></b>,
+                <b><a href="https://www.theoj.org/joss-papers/joss.01667/10.21105.joss.01667.pdf" target="_blank">Open-UNMX (UNMX)</a></b> , 
+                and <b><a href="https://arxiv.org/pdf/1611.06265" target="_blank">Open-UNMX+Chimera (UNMX+)</a></b> DL models. 
+                The models are applied to three samples from each of the two datasets. For each sample, results are shown for all three models.  
+                Each sample can be accessed by switching tabs using a left click. Additionally, there is ability to mute or solo specific instrumentsand move the timestamp of the audio track.
+                The first dataset (Crete2019) is the one on which these DL models were trained, and it includes the evaluation metric of <b><a href="https://github.com/sigsep/sigsep-mus-eval" target="_blank">SI-SDR</a></b> to assess the separation quality.
+                As indicated by the metrics, the <b>UNMX</b> model performs better than the <b>MSK model</b>, which, in turn, outperforms the final <b>UNMX+</b> model. 
+                In contrast, for the second dataset (<b>S0USTA</b>), such evaluation metrics cannot be provided, as there are no ground truth stems available for comparison. 
+                The separated lyra stems from the Sousta dataset are intended for use in a subsequent system for Automatic Music Transcription (AMT). 
+                It is important to note that while the <b>UNMX</b> model generally performs better, the <b>MSK</b> model seems to perform better for the AMT task. 
+                Therefore, the <b>MSK-separated</b> lyra samples will be used for the final AMT task.
+            <br><br>
+            The audio players and waveforms are powered by the <b><a href="https://wavesurfer-js.org/" target="_blank">WaveSurfer.js</a></b> library, 
+            which provides an interactive interface for audio visualization and playback.</p>
+        </div>
+        <div class="footnote">(Created by <b>Emmanouil Sifakis</b>)</div>
+    
+        <script src="js/MSS_script.js"></script>
+        <script>
+            function switchTab(tabId) {
+                // Find the parent dataset container of the clicked tab button
+                const datasetContainer = event.target.closest('.dataset-container');
+                
+                // Hide all tab contents within the specific dataset container
+                datasetContainer.querySelectorAll('.tab-content').forEach(container => {
+                    container.classList.remove('active');
+                });
+    
+                // Remove active class from all buttons within the specific dataset container
+                datasetContainer.querySelectorAll('.tab-button').forEach(button => {
+                    button.classList.remove('active');
+                });
+    
+                // Show the selected tab content within the specific dataset container
+                datasetContainer.querySelector(`#${tabId}`).classList.add('active');
+    
+                // Highlight the selected tab button
+                event.target.classList.add('active');
+            }
+        </script>
+    </body>
+    
+</html>

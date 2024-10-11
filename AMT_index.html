@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyra_MSS_AMT (AMT Page)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:wght@100;400;700&display=swap" rel="stylesheet">
+
+    
+    <!-- Include the CSS -->
+    <style>
+        /* Page title styling */
+        .page-title {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 30px;
+            font-weight: 700;
+            color: #333;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        
+        .dataset-title {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 25px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: -20px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 16px;
+            color: #000000;
+            margin: 0px auto; /* Center the box horizontally */
+            padding: 0px; /* Add space inside the box */
+            border: 1px solid #ffffff; /* Add a border around the box */
+            background-color: #ffffff; /* Add a background color */
+            width: 60%; /* Set the width of the box */
+            text-align: center;
+            border-radius: 10px; /* Optional: Add rounded corners */
+            margin-top: 0px
+        }
+
+        .small_subtitle {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 14px;
+            color: #000000;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Footnote styling */
+        .footnote {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 15px;
+            color: #3E65B9;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        /* Box to cover the slider when paused or stopped */
+        .slider-cover {
+            position: absolute;
+            background-color:  #fcf3cf; /* Semi-transparent white */
+            opacity: 50%;
+            height: 20px;
+            width: 300px; /* Match the width of the slider */
+            top: 38px; /* Position it over the slider */
+            left: 115px;
+            display: none; /* Initially hidden */
+            z-index: 1; /* Ensure it sits on top of the slider */
+            text-align: center;
+            line-height: 25px; 
+        }
+
+        .tab-group-container {
+            border: 0px solid #e7e7e7; /* Optional: a border to visually separate tab groups */
+        }
+
+        /* Set a maximum width for both the player and the visualizer */
+        #section3 {
+            max-width: 1000px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Flex container to hold both MIDI containers */
+        .midi-flex-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            /*border-bottom: 1.7px solid #E7E7E7;*/
+            border: 0.9px solid #cccccc;
+            border-radius: 5px;
+            max-width: 930px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 80px;
+            background-color: #ffffff;
+            transform-origin: top center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Show active flex container */
+        .midi-flex-container.scaled {
+            display: flex;
+        }
+
+        /* Direct scale control */
+        .scaled {
+            transform: scale(1.2); /* Default scale value. Change this as needed */
+        }
+
+        /* Tab button styling */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 9px;
+            margin-top: 40px;
+            margin-bottom: -35px;
+            border: 1px solid #ffffff;
+        }
+
+        .tab-button {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 15px;
+            font-weight: 400;
+            color: #000000;
+            background-color: #FDF6D7;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            width: 130px;
+            height: 38px;
+            cursor: pointer;
+        }
+
+        .tab-button.active {
+            color: #ffffff;
+            background-color: #3E65B9;
+            border: 1px solid #E7E7E7;
+        }
+        /* Container to apply scaling */
+        .midi-wrapper {
+            display: inline-block;
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+
+        .midi-title {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 20px;
+            font-weight: 100;
+            color: #000;
+            margin-bottom: -10px;
+            margin-top: 10px;
+        }
+
+        /* Custom player and visualizer style */
+        .midi-wrapper midi-player, .midi-wrapper midi-visualizer {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .midi-wrapper midi-player::part(control-panel) {
+            background: #fcf3cf;
+            border: 0.8px solid #a3a3a3;
+            border-radius: 5px 5px 0 0;
+            width: 100%;
+            height: 25px;
+            box-sizing: border-box;
+        }
+
+        .midi-wrapper midi-player::part(play-button) {
+            display: none; /* Hides the play/pause button */
+        }
+
+        .midi-wrapper midi-player::part(time) {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 16px;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        /* Custom visualizer style */
+        .midi-wrapper midi-visualizer .piano-roll-visualizer {
+            background: #ffffff;
+            border: 0.8px solid black;
+            border-top: none;
+            border-bottom: none;
+            border-color: #a3a3a3;
+            border-bottom-color: #a3a3a3;
+            border-radius: 0 0 0px 0px;
+            margin-top: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            height: 108px;
+            width: 420px;
+        }
+
+        /* Notes default style */
+        .midi-wrapper midi-visualizer svg rect.note {
+            opacity: 0.6;
+            stroke-width: 0;
+            height: 8px;
+            fill: #558bff;
+        }
+
+        .midi-wrapper midi-visualizer svg rect.note.active {
+            opacity: 0.9;
+            stroke: #000;
+            stroke-width: 1;
+            fill: #ff7373;
+        }
+
+        /* Waveform container */
+        .waveform-container {
+            background-color: #ffffff;
+            border: 0.8px solid #a3a3a3;
+            border-radius: 0px 0px 5px 5px;
+            padding: 0;
+        }
+
+        .controls {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Play button styles */
+        .controls button.play-button {
+            font-family: 'Anonymous Pro', monospace;
+            color: black;
+            font-size: 15px;
+            background: #ffffff;
+            border: none;
+            border: 1.4px solid rgb(231, 231, 231);
+            padding: 10px 0px;
+            cursor: pointer;
+            width: 50px;
+            height: 25px;
+            text-align: center;
+            line-height: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Change the background color when active (Pause) */
+        .controls button.play-button.active-playback {
+            background-color:#fcf3cf; /* Orange when paused */
+            color: rgb(0, 0, 0); /* White text when paused */
+            border: 1.4px solid black;
+        }
+
+        /* Stop button styles */
+        .controls button.stop-button {
+            font-family: 'Anonymous Pro', monospace;
+            color: black;
+            font-size: 15px;
+            background: #ffffff;
+            border: none;
+            border: 1.4px solid rgb(231, 231, 231);
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 45px;
+            height: 25px;
+            text-align: center;
+            line-height: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Change the background color when active (Pause) */
+        .controls button.stop-button.active-stop {
+            background-color: #fcf3cf; /* Change to your desired color */
+            color: rgb(0, 0, 0); /* Change the text color if needed */
+            border: 1.4px solid black; /* Optional: add a border */
+        }
+
+        /* New class to change the color of the play button when paused */
+        .controls button.play-button.paused-state {
+            background-color: #fcf3cf; /* Change to the color you want when paused */
+            color: black; /* Keep the text color or change as desired */
+            border: 1.4px solid black;
+        }
+
+        /* Mute button styles */
+        .controls button.mute-button {
+            font-family: 'Anonymous Pro', monospace;
+            color: black;
+            font-size: 15px;
+            background-color: #fadbd8;
+            border: 1.4px solid rgb(231, 231, 231);
+            padding: 10px 15px;
+            cursor: pointer;
+            width: 45px;
+            height: 25px;
+            text-align: center;
+            line-height: 1.2em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Adding border to mute button when active */
+        .controls button.mute-button.active {
+            border: 1.5px solid rgb(0, 0, 0); /* Border for active mute button */
+            transition: none; /* No delay for stroke change */
+        }
+
+        /* Volume slider customization */
+        .controls input[type="range"] {
+            appearance: none; /* Standard property */
+            -webkit-appearance: none; /* Vendor prefix for WebKit browsers */
+            width: 180px;
+            height: 8px;
+            background: #E1E4E6;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            transition: opacity 0.15s ease-in-out;
+        }
+
+        /* Volume slider thumb */
+        .controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 8px;
+            height: 8px;
+            background: #0075FF;
+            cursor: pointer;
+            border-radius: 100%;
+        }
+
+        .controls input[type="range"]::-moz-range-thumb {
+            width: 10px;
+            height: 10px;
+            background: #fff0de;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .controls input[type="range"]::-webkit-slider-runnable-track {
+            height: 10px;
+            background: #E1E4E6;
+            border: 1px solid #B2B2B2; /* 2px border for WebKit browsers */
+            border-radius: 10px;
+        }
+
+        /* Font styling for volume label */
+        .controls label {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 18px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <section id="section3">
+        <div class="page-title">Automatic Music Transcription for Cretan Lyra</div>
+        <div class="dataset-title">CREPE-N0TES (CN)</div>
+    
+        <!-- Group for CREPE-N0TES -->
+        <div class="tab-group-container"> <!-- Added wrapper for CREPE-N0TES tab group -->
+            <div class="tab-container">
+                <button class="tab-button active" data-target="tab_1">Sample 051</button>
+                <button class="tab-button" data-target="tab_2">Sample 270</button>
+                <button class="tab-button" data-target="tab_3">Sample 035</button>
+            </div>
+    
+            <!-- Flex container for Sample 051 -->
+            <div class="midi-flex-container scaled" id="tab_1"> <!-- Applying scaled class for transform -->
+                <div class="midi-wrapper" id="midi-container-1">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/051_GT.mid" sound-font loop visualizer="#midi-container-1 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/051_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                </div>
+                
+
+                <div class="midi-wrapper" id="midi-container-2">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/051_CN.mid" sound-font loop visualizer="#midi-container-2 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/051_CN.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 66.32%</div>
+                </div>
+                
+            </div>
+
+            <!-- Flex container for Sample 270 -->
+            <div class="midi-flex-container" id="tab_2">
+                <div class="midi-wrapper" id="midi-container-3">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/270_GT.mid" sound-font loop visualizer="#midi-container-3 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/270_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                </div>
+
+                <div class="midi-wrapper" id="midi-container-4">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/270_CN.mid" sound-font loop visualizer="#midi-container-4 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/270_CN.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 43.69%</div>
+                </div>
+
+            </div>
+
+            <!-- Flex container for Sample 270 -->
+            <div class="midi-flex-container" id="tab_3">
+                <div class="midi-wrapper" id="midi-container-5">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/035_GT.mid" sound-font loop visualizer="#midi-container-5 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/035_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                </div>
+
+                <div class="midi-wrapper" id="midi-container-6">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/035_CN.mid" sound-font loop visualizer="#midi-container-6 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/035_CN.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 35.75%</div>
+                </div>
+
+            </div>
+        </div>
+    
+        <div class="dataset-title">CREPE-N0TES Improved (CNi)</div>
+    
+        <!-- Group for CREPE-N0TES 2 -->
+        <div class="tab-group-container"> <!-- Added wrapper for CREPE-N0TES 2 tab group -->
+            <div class="tab-container">
+                <button class="tab-button active" data-target="tab_4">Sample 051</button>
+                <button class="tab-button" data-target="tab_5">Sample 270</button>
+                <button class="tab-button" data-target="tab_6">Sample 035</button>
+            </div>
+    
+            <!-- Flex container for Sample 051 -->
+            <div class="midi-flex-container scaled" id="tab_4"> <!-- Applying scaled class for transform -->
+                <div class="midi-wrapper" id="midi-container-7">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/051_GT.mid" sound-font loop visualizer="#midi-container-7 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/051_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                </div>
+                
+
+                <div class="midi-wrapper" id="midi-container-8">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/051_CNi.mid" sound-font loop visualizer="#midi-container-8 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/051_CNi.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 64.65%</div>
+                </div>
+                
+            </div>
+
+            <!-- Flex container for Sample 270 -->
+            <div class="midi-flex-container" id="tab_5">
+                <div class="midi-wrapper" id="midi-container-9">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/270_GT.mid" sound-font loop visualizer="#midi-container-9 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/270_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                </div>
+
+                <div class="midi-wrapper" id="midi-container-10">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/270_CNi.mid" sound-font loop visualizer="#midi-container-10 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/270_CNi.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 49.21%</div>
+                </div>
+
+            </div>
+
+            <!-- Flex container for Sample 270 -->
+            <div class="midi-flex-container" id="tab_6">
+                <div class="midi-wrapper" id="midi-container-11">
+                    <div class="midi-title">Ground Truth</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/035_GT.mid" sound-font loop visualizer="#midi-container-11 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/035_GT.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
+                    </div>
+                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                </div>
+
+                <div class="midi-wrapper" id="midi-container-12">
+                    <div class="midi-title">Estimation</div>
+                    <div class="controls">
+                        <button class="play-button">Play</button>
+                        <button class="stop-button">Stop</button>
+                        <button class="mute-button">Mute</button>
+                        <label for="volume-slider">Volume:</label>
+                        <input type="range" class="volume-slider" min="0" max="1" step="0.01" value="1">
+                    </div>
+                    <midi-player src="AMT_midi/035_CNi.mid" sound-font loop visualizer="#midi-container-12 midi-visualizer"></midi-player>
+                    <midi-visualizer src="AMT_midi/035_CNi.mid"></midi-visualizer>
+                    <div class="waveform-container">
+                        <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
+                    </div>
+                    <div class="small_subtitle">F1_score = 42.28%</div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+    
+    <div class="subtitle">
+        <p style="text-align: justify;">This webpage demonstrates Automatic Music Transcription (AMT) applied to Cretan dance tunes played by the Cretan lyra. 
+            Various deep learning (DL) techniques are used for this AMT task, specifically the 
+            <b><a href="https://arxiv.org/pdf/2311.08884" target="_blank">CREPE-N0TES (CN)</a></b> and the <b>CREPE-N0TES Improved (CNi)</b> DL models.
+
+            The models are applied to three samples from the previously separated S0USTA Dataset using the <b>Mask-Inference</b> MSS model. 
+            For each model, the results are shown alongside their corresponding ground truths. 
+            Each sample’s estimation and ground truth can be accessed by switching tabs with a left click. In each media container, 
+            the MIDI estimation of the transcription is played together with the separated lyra track. 
+            There the ability to mute the lyra audio track and adjust the players’ timestamps, but only before pressing the play button for the first time. 
+            For each sample, the <b>F1_score</b> is provided, which is used to evaluate the transcription accuracy of the models.
+
+            The three samples demonstrate varying levels of transcription quality: one with good, one with moderate and one with poor-quality. 
+            These samples are presented through tabs in ascending order of quality, from left to right. 
+
+            The main <b>CN</b> model is pretrained, using a fundamental frequency estimation model 
+            (<b><a href="https://arxiv.org/pdf/1802.06182" target="_blank">CREPE</a></b> ), followed by monophonic note segmentation from the <b>CN</b> system. 
+            The <b>CNi</b> model shows the results of a cross-validation experiment, exploring the capabilities of a trainable, 
+            "improved" version of CREPE, <b><a href="https://arxiv.org/pdf/2301.12258" target="_blank">FCNF0++</a></b>, 
+            before applying the same monophonic note segmentation technique as <b>CN</b>.
+        <br><br>
+        The audio players and waveforms are powered by the <b><a href="https://wavesurfer-js.org/" target="_blank">WaveSurfer.js</a></b> library, 
+        which provides an interactive interface for audio visualization and playback.
+    
+        The MIDI player and visualizer elements are made possible by the <b><a href="https://github.com/cifkao/html-midi-player" target="_blank">html-midi-player</a></b> package, 
+        powered by <b><a href="https://magenta.tensorflow.org/" target="_blank">@magenta/music</a></b>. 
+        </p>
+    </div>
+    <div class="footnote">(Created by <b>Emmanouil Sifakis</b>)</div>
+
+    <!-- Include Wavesurfer.js for waveform display -->
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+    <script src="js/AMT_script.js"></script>
+
+    <script>
+
+    document.querySelectorAll('.tab-group-container').forEach(tabGroup => {
+        // Get all tab buttons within this tab group
+        const buttons = tabGroup.querySelectorAll('.tab-button');
+        
+        // Add click event listeners to each tab button
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove 'active' class from all buttons in this tab group
+                buttons.forEach(btn => btn.classList.remove('active'));
+
+                // Add 'active' class to the clicked button
+                button.classList.add('active');
+
+                // Hide all MIDI containers in this tab group
+                const midiContainers = tabGroup.querySelectorAll('.midi-flex-container');
+                midiContainers.forEach(container => container.classList.remove('scaled'));
+
+                // Show the target MIDI container based on the data-target attribute
+                const target = tabGroup.querySelector(`#${button.getAttribute('data-target')}`);
+                target.classList.add('scaled');
+            });
+        });
+    });
+    </script>
+    
+</body>
+</html>
