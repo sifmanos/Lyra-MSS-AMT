@@ -9,14 +9,23 @@
     
     <!-- Include the CSS -->
     <style>
+         .page-title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 860px;
+            margin: 0 auto; /* Center the container horizontally */
+            padding-top: 8px;
+            padding-bottom: 15px;
+            border-bottom: 1.5px solid #ccc;
+        }
         /* Page title styling */
         .page-title {
             font-family: 'Anonymous Pro', monospace;
             font-size: 30px;
             font-weight: 700;
             color: #333;
-            margin-top: -10px;
-            margin-bottom: 10px;
+            border: 0px solid #3E65B9;
         }
         
         .dataset-title {
@@ -362,13 +371,36 @@
             font-size: 18px;
             color: black;
         }
+
+        .button {
+            background-color:  #fdf6d7;
+            font-family: 'Anonymous Pro', monospace;
+            color: #000000; /* Active button text color */
+            border: 1px solid #000000;
+            border-radius: 5px;
+            padding: 8px 18px;
+            font-size: 15px;
+            cursor: pointer;
+            display: inline-block; /* Make buttons behave like inline elements */
+        }
+
+        /* Hover effects for both buttons */
+        .button:hover {
+            font-family: 'Anonymous Pro', monospace;
+            color: #ffffff; /* Active button text color */
+            background-color: #3e65b9;
+            border: 1px solid #E7E7E7;
+        }
     </style>
 </head>
 <body>
     
 
     <section id="section3">
-        <div class="page-title">Automatic Music Transcription for Cretan Lyra</div>
+        <div class="page-title-container">
+            <button class="button" onclick="window.location.href='index.html'">Home</button>
+            <div class="page-title">Automatic Music Transcription for Cretan Lyra</div>
+        </div>
         <div class="dataset-title">CREPE-N0TES (CN)</div>
     
         <!-- Group for CREPE-N0TES -->
