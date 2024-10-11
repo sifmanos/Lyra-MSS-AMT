@@ -20,12 +20,25 @@
             padding: 10px;
         }
 
+        .page-title-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 780px;
+            margin: 0 auto; /* Center the container horizontally */
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1.5px solid #ccc;
+        }
+
+
+        /* Page title styling */
         .page-title {
+            font-family: 'Anonymous Pro', monospace;
             font-size: 30px;
             font-weight: 700;
             color: #333;
-            margin-bottom: 10px;
-            text-align: center;
+            border: 0px solid #3E65B9;
         }
 
         .dataset-title {
@@ -226,11 +239,34 @@
             margin-bottom: 20px;
             text-align: center;
         }
+
+        .button {
+            background-color:  #fdf6d7;
+            font-family: 'Anonymous Pro', monospace;
+            color: #000000; /* Active button text color */
+            border: 1px solid #000000;
+            border-radius: 5px;
+            padding: 8px 18px;
+            font-size: 15px;
+            cursor: pointer;
+            display: inline-block; /* Make buttons behave like inline elements */
+        }
+
+        /* Hover effects for both buttons */
+        .button:hover {
+            font-family: 'Anonymous Pro', monospace;
+            color: #ffffff; /* Active button text color */
+            background-color: #3e65b9;
+            border: 1px solid #E7E7E7;
+        }
     </style>
 </head>
     <body>
         <div class="content-container">
-            <div class="page-title">Music Source Separation for Cretan Lyra</div>
+            <div class="page-title-container">
+                <button class="button" onclick="window.location.href='index.html'">Home</button>
+                <div class="page-title">Music Source Separation for Cretan Lyra</div>
+            </div>
     
             <!-- Crete2019 Dataset Container -->
             <div class="dataset-container" id="crete2019">
