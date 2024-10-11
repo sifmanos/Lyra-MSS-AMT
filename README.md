@@ -1,6 +1,6 @@
 <div align="center">
 
-# Lyra_MSS_AMT
+# Lyra-MSS-AMT
 
 </div>
 
