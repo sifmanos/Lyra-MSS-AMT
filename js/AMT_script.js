@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         wavesurfer.load(wavFileSrc);
 
         wavesurfer.on('ready', () => {
+            wavesurfer.setVolume(0.8); // additional line of code
             console.log("WaveSurfer is ready, waveform should be visible.");
         });
 
