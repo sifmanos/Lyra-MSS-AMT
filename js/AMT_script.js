@@ -130,6 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
             showSliderCover();
 
             playCount = 0; // Reset play count after stop is pressed
+
+            // Addition: Changing the color of the stop button when pressed
+            stopButton.classList.add('active-stop');
+            setTimeout(() => {
+                stopButton.classList.remove('active-stop');
+            }, 200); // Adjust this time as needed
         });
 
         muteWavButton.addEventListener('click', () => {
