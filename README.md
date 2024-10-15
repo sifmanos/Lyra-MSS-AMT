@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/images/Lyra-MSS-AMT(logo).png" alt="Lyra-MSS-AMT Logo" width="400"/>
+
 # Lyra-MSS-AMT
 
 </div>
