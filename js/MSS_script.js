@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="playback-controls">
                         <button id="play${index}" class="play-button">Play</button>
                         <button id="stop${index}" class="stop-button">Stop</button>
-                        <button id="stop${index}">&#x23F9;</button>
                         <div class="time-display">
                             <span id="current-time${index}">0:00</span> / <span id="duration${index}">0:00</span>
                         </div>
