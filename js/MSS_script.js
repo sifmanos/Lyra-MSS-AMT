@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="top-controls">
                     <div class="title">${title}</div>
                     <div class="playback-controls">
-                        <button id="play${index}">&#x23F5;</button>
-                        <button id="pause${index}">&#x23F8;</button>
+                        <button id="play${index}" class="play-button">Play</button>
+                        <button id="stop${index}" class="stop-button">Stop</button>
                         <button id="stop${index}">&#x23F9;</button>
                         <div class="time-display">
                             <span id="current-time${index}">0:00</span> / <span id="duration${index}">0:00</span>
@@ -88,11 +88,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Playback controls
         const playButton = document.getElementById(`play${index}`);
-        const pauseButton = document.getElementById(`pause${index}`);
         const stopButton = document.getElementById(`stop${index}`);
         const currentTimeDisplay = document.getElementById(`current-time${index}`);
         const durationDisplay = document.getElementById(`duration${index}`);
 
+        playButton.addEventListener('click', () => {
+            if (wavesurfer1.isPlaying()) {
+                wavesurfer1.pause();
+                wavesurfer2.pause();
+                playButton.textContent = "Play";  // Change button text to Play
+                playButton.style.color = "black";  // Revert to default color
+                playButton.classList.remove('active');  // Remove active class
+            } else {
+                wavesurfer1.play();
+                wavesurfer2.play();
+                playButton.textContent = "Pause";  // Change button text to Pause
+                playButton.style.color = "#000";  // Active color
+                playButton.classList.add('active');  // Add active class to change background/border
+            }
+        });
+        
+        stopButton.addEventListener('click', () => {
+            wavesurfer1.stop();
+            wavesurfer2.stop();
+        
+            // Reset Play button text, color, and remove active class
+            playButton.textContent = "Play";  
+            playButton.style.color = "black";
+            playButton.classList.remove('active');  // Reset the active state of Play
+        
+            // Add active-playback class to Stop button for temporary visual feedback (change color)
+            stopButton.classList.add('active-playback');
+            setTimeout(() => {
+                stopButton.classList.remove('active-playback');
+            }, 200);
+        });
+        
         // Solo and mute buttons
         const solo1Button = document.getElementById(`solo1-${index}`);
         const mute1Button = document.getElementById(`mute1-${index}`);
