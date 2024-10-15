@@ -203,24 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
             updateVolumes();
         });
 
-        playButton.addEventListener('click', () => {
-            setActiveButton(playButton);
-            wavesurfer1.play();
-            wavesurfer2.play();
-        });
-
-        pauseButton.addEventListener('click', () => {
-            setActiveButton(pauseButton);
-            wavesurfer1.pause();
-            wavesurfer2.pause();
-        });
-
-        stopButton.addEventListener('click', () => {
-            setActiveButton(stopButton);
-            wavesurfer1.stop();
-            wavesurfer2.stop();
-        });
-
         wavesurfer1.on('ready', () => {
             durationDisplay.textContent = formatTime(wavesurfer1.getDuration());
         });
