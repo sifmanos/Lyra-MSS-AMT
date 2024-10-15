@@ -158,24 +158,40 @@
         .playback-controls {
             display: flex;
             align-items: center;
+            gap: 8px;
         }
 
         .playback-controls button {
-            font-size: 20px;
-            width: 30px;
-            height: 30px;
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 15px;
+            width: 50px;
+            height: 28px;
             margin: 0px;
             padding: 0;
             border-radius: 1px;
-            color: rgb(0, 0, 0);
+            color: black; /* Default color */
             background-color: #ffffff;
-            border: 1px solid transparent;
+            border: 1.4px solid #e7e7e7;
             cursor: pointer;
         }
 
         .active-playback {
-            border: 2px solid black;
+            background-color:#fcf3cf; /* Orange when paused */
+            color: #000000; /* White text when paused */
+            border: 1.4px solid black;
         }
+
+        .play-button.active {
+            background-color:#fcf3cf; /* Orange when paused */
+            color: #000000; /* White text when paused */
+            border: 1.4px solid black;
+        }
+
+        .stop-button.active-playback {
+            background-color: #fadbd8; /* Orange background */
+            color: #000000; /* Black text */
+            border: 1.4px solid black;
+        } 
 
         .time-display {
             font-family: 'Anonymous Pro', monospace;
@@ -282,27 +298,27 @@
                 <!-- Tab content: Sample 8 -->
                 <div id="sample_8" class="tab-content active">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/8_msk_lyra.wav" data-audio2="MSS_audio/8_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 5.11dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmx_lyra.wav" data-audio2="MSS_audio/8_unmx_lute.wav" data-title="Open-UNMX" data-subtitle="SI-SDR = 5.98dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmxC_lyra.wav" data-audio2="MSS_audio/8_unmxC_lute.wav" data-title="Open-UNMX+Chimera" data-subtitle="SI-SDR = 5.23dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_msk_lyra.wav" data-audio2="MSS_audio/8_msk_lute.wav" data-title="MSK" data-subtitle="SI-SDR = 5.11dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmx_lyra.wav" data-audio2="MSS_audio/8_unmx_lute.wav" data-title="UNMX" data-subtitle="SI-SDR = 5.98dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/8_unmxC_lyra.wav" data-audio2="MSS_audio/8_unmxC_lute.wav" data-title="UNMX+" data-subtitle="SI-SDR = 5.23dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
                     </div>
                 </div>
     
                 <!-- Tab content: Sample 11 -->
                 <div id="sample_11" class="tab-content">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/11_msk_lyra.wav" data-audio2="MSS_audio/11_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 4.65dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmx_lyra.wav" data-audio2="MSS_audio/11_unmx_lute.wav" data-title="Open-UNMX"  data-subtitle="SI-SDR = 7.04dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmxC_lyra.wav" data-audio2="MSS_audio/11_unmxC_lute.wav" data-title="Open-UNMX+Chimera"  data-subtitle="SI-SDR = 4.13dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_msk_lyra.wav" data-audio2="MSS_audio/11_msk_lute.wav" data-title="MSK" data-subtitle="SI-SDR = 4.65dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmx_lyra.wav" data-audio2="MSS_audio/11_unmx_lute.wav" data-title="UNMX"  data-subtitle="SI-SDR = 7.04dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/11_unmxC_lyra.wav" data-audio2="MSS_audio/11_unmxC_lute.wav" data-title="UNMX+"  data-subtitle="SI-SDR = 4.13dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
                     </div>
                 </div>
     
                 <!-- Tab content: Sample 16 -->
                 <div id="sample_16" class="tab-content">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/16_msk_lyra.wav" data-audio2="MSS_audio/16_msk_lute.wav" data-title="Mask Inference" data-subtitle="SI-SDR = 3.79dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmx_lyra.wav" data-audio2="MSS_audio/16_unmx_lute.wav" data-title="Open-UNMX"  data-subtitle="SI-SDR = 5.99dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
-                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmxC_lyra.wav" data-audio2="MSS_audio/16_unmxC_lute.wav" data-title="Open-UNMX+Chimera"  data-subtitle="SI-SDR = 3.18dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_msk_lyra.wav" data-audio2="MSS_audio/16_msk_lute.wav" data-title="MSK" data-subtitle="SI-SDR = 3.79dB <br><br> Avg. Mask-Inference SI-SDR: 4.95dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmx_lyra.wav" data-audio2="MSS_audio/16_unmx_lute.wav" data-title="UNMX"  data-subtitle="SI-SDR = 5.99dB <br><br> Avg. Mask-Inference SI-SDR: 7.45dB"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/16_unmxC_lyra.wav" data-audio2="MSS_audio/16_unmxC_lute.wav" data-title="UNMX+"  data-subtitle="SI-SDR = 3.18dB <br><br> Avg. Mask-Inference SI-SDR: 4.67dB"></div>
                     </div>
                 </div>
             </div>
@@ -321,7 +337,7 @@
                 <!-- Tab content: Sample 27 -->
                 <div id="sample_27" class="tab-content active">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/027_msk_lyra.wav" data-audio2="MSS_audio/027_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/027_msk_lyra.wav" data-audio2="MSS_audio/027_msk_lute.wav" data-title="MSK"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/027_unmx_lyra.wav" data-audio2="MSS_audio/027_unmx_lute.wav" data-title="Open-UNMX"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/027_unmxC_lyra.wav" data-audio2="MSS_audio/027_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
                     </div>
@@ -330,7 +346,7 @@
                 <!-- Tab content: Sample 289 -->
                 <div id="sample_289" class="tab-content">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/289_msk_lyra.wav" data-audio2="MSS_audio/289_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/289_msk_lyra.wav" data-audio2="MSS_audio/289_msk_lute.wav" data-title="MSK"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/289_unmx_lyra.wav" data-audio2="MSS_audio/289_unmx_lute.wav" data-title="Open-UNMX"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/289_unmxC_lyra.wav" data-audio2="MSS_audio/289_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
                     </div>
@@ -339,7 +355,7 @@
                 <!-- Tab content: Sample 270 -->
                 <div id="sample_270" class="tab-content">
                     <div class="audio-player-container">
-                        <div class="audio-player-instance" data-audio1="MSS_audio/270_msk_lyra.wav" data-audio2="MSS_audio/270_msk_lute.wav" data-title="Mask Inference"></div>
+                        <div class="audio-player-instance" data-audio1="MSS_audio/270_msk_lyra.wav" data-audio2="MSS_audio/270_msk_lute.wav" data-title="MSK"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/270_unmx_lyra.wav" data-audio2="MSS_audio/270_unmx_lute.wav" data-title="Open-UNMX"></div>
                         <div class="audio-player-instance" data-audio1="MSS_audio/270_unmxC_lyra.wav" data-audio2="MSS_audio/270_unmxC_lute.wav" data-title="Open-UNMX+Chimera"></div>
                     </div>
