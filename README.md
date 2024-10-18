@@ -11,5 +11,8 @@ The **Lyra-MSS-AMT** project focuses on applying deep learning techniques to mus
 ## Demo 🔊🎻
 A live demo of both systems can be accessed through the [Lyra-MSS-AMT - Demo](https://sifmanos.github.io/Lyra-MSS-AMT/), where users can explore their performance.
 
+## Updates 🚨📝
+Currently working on expanding the GitHub repository with Jupyter notebooks and scripts that will allow users to apply the separation and transcription models to their own lyra recordings.
+
 #
 A notable achievement is the presentation of a peer-reviewed [abstract](https://github.com/sifmanos/Lyra-MSS-AMT/blob/main/docs/Holzapfel-Sifakis_AAWM24.pdf) and demos for the MSS and AMT systems at the [AAWM 2024 Conference](https://iftawm.org/conferences/), held on June 10–14, 2024, at the University of Bologna. This event showcased the integration of traditional music with technological advancements and facilitated engagement with experts in MIR and ethnomusicology.
