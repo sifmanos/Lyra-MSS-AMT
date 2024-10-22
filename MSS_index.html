@@ -283,7 +283,16 @@
                 <button class="button" onclick="window.location.href='index.html'">Home</button>
                 <div class="page-title">Music Source Separation for Cretan Lyra</div>
             </div>
-    
+            <div class="subtitle">
+                <p style="text-align: justify;">This webpage demonstrates Music Source Separation (MSS) applied to Cretan dance tunes for estimating the lyra stem. 
+                    Various deep learning (DL) techniques are used for this MSS task, specifically the <b><a href="https://arxiv.org/pdf/1502.04149" target="_blank">Mask-Inference (MSK)</a></b>,
+                    <b><a href="https://www.theoj.org/joss-papers/joss.01667/10.21105.joss.01667.pdf" target="_blank">Open-UNMX (UNMX)</a></b> , 
+                    and <b><a href="https://arxiv.org/pdf/1611.06265" target="_blank">Open-UNMX+Chimera (UNMX+)</a></b> DL models. 
+                    The models are applied to three samples from each of the two datasets (Crete2019 and S0USTA). For each sample, results are shown for all three models.  
+                    Each sample can be accessed by switching tabs using a left click. 
+                    Additionally, there is ability to mute or solo specific instrumentsand move the timestamp of the audio track.
+                    Also the separation metric SI-SDR for each sample is shown under each player together with the total average SI-SDR of each model.
+            </div>
             <!-- Crete2019 Dataset Container -->
             <div class="dataset-container" id="crete2019">
                 <div class="dataset-title">Crete2019 Dataset</div>
@@ -364,13 +373,7 @@
         </div>
         
         <div class="subtitle">
-            <p style="text-align: justify;">This webpage demonstrates Music Source Separation (MSS) applied to Cretan dance tunes for estimating the lyra stem. 
-                Various deep learning (DL) techniques are used for this MSS task, specifically the <b><a href="https://arxiv.org/pdf/1502.04149" target="_blank">Mask-Inference (MSK)</a></b>,
-                <b><a href="https://www.theoj.org/joss-papers/joss.01667/10.21105.joss.01667.pdf" target="_blank">Open-UNMX (UNMX)</a></b> , 
-                and <b><a href="https://arxiv.org/pdf/1611.06265" target="_blank">Open-UNMX+Chimera (UNMX+)</a></b> DL models. 
-                The models are applied to three samples from each of the two datasets. For each sample, results are shown for all three models.  
-                Each sample can be accessed by switching tabs using a left click. Additionally, there is ability to mute or solo specific instrumentsand move the timestamp of the audio track.
-                The first dataset (Crete2019) is the one on which these DL models were trained, and it includes the evaluation metric of <b><a href="https://github.com/sigsep/sigsep-mus-eval" target="_blank">SI-SDR</a></b> to assess the separation quality.
+            <p style="text-align: justify;">The first dataset (Crete2019) is the one on which these DL models were trained, and it includes the evaluation metric of <b><a href="https://github.com/sigsep/sigsep-mus-eval" target="_blank">SI-SDR</a></b> to assess the separation quality.
                 As indicated by the metrics, the <b>UNMX</b> model performs better than the <b>MSK model</b>, which, in turn, outperforms the final <b>UNMX+</b> model. 
                 In contrast, for the second dataset (<b>S0USTA</b>), such evaluation metrics cannot be provided, as there are no ground truth stems available for comparison. 
                 The separated lyra stems from the Sousta dataset are intended for use in a subsequent system for Automatic Music Transcription (AMT). 
