@@ -52,6 +52,21 @@
             margin-top: 0px
         }
 
+        .subtitle_metric {
+            font-family: 'Anonymous Pro', monospace;
+            font-size: 17px;
+            color: #000000;
+            margin: 0px auto; /* Center the box horizontally */
+            padding: 0px; /* Add space inside the box */
+            border: 1px solid #ffffff; /* Add a border around the box */
+            background-color: #ffffff; /* Add a background color */
+            width: 60%; /* Set the width of the box */
+            text-align: center;
+            border-radius: 10px; /* Optional: Add rounded corners */
+            margin-top: 30px;
+            margin-bottom: -15px;
+        }
+        
         .small_subtitle {
             font-family: 'Anonymous Pro', monospace;
             font-size: 14px;
@@ -401,8 +416,23 @@
             <button class="button" onclick="window.location.href='index.html'">Home</button>
             <div class="page-title">Automatic Music Transcription for Cretan Lyra</div>
         </div>
-        <div class="dataset-title">CREPE-N0TES (CN)</div>
+
+        <div class="subtitle" style="width: 100%; margin: 0 auto; text-align: center;">
+            <p style="text-align: justify;">This webpage demonstrates Automatic Music Transcription (AMT) applied to Cretan dance tunes played by the Cretan lyra. 
+                Various deep learning (DL) techniques are used for this AMT task, specifically the 
+                <b><a href="https://arxiv.org/pdf/2311.08884" target="_blank">CREPE-N0TES (CN)</a></b> and the <b>CREPE-N0TES Improved (CNi)</b> DL models.
     
+                The models are applied to three samples from the previously separated S0USTA Dataset using the <b>Mask-Inference</b> MSS model. 
+                For each model, the results are shown alongside their corresponding ground truths. 
+                Each sample’s estimation and ground truth can be accessed by switching tabs with a left click. In each media container, 
+                the MIDI estimation of the transcription is played together with the separated lyra track. 
+                There the ability to mute the lyra audio track and adjust the players’ timestamps, but only before pressing the play button for the first time. 
+                For each sample, the <b>F1_score</b> is provided, which is used to evaluate the transcription accuracy of the models.
+            </p>
+        </div>
+        
+        <div class="dataset-title">CREPE-N0TES (CN)</div>
+        <div class="subtitle_metric">Avg. F1_score = 50.96%</div>
         <!-- Group for CREPE-N0TES -->
         <div class="tab-group-container"> <!-- Added wrapper for CREPE-N0TES tab group -->
             <div class="tab-container">
@@ -427,7 +457,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
                     </div>
-                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CN Avg. F1_score = 50.17%</div>
                 </div>
                 
 
@@ -466,7 +496,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
                     </div>
-                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CN Avg. F1_score = 50.17%</div>
                 </div>
 
                 <div class="midi-wrapper" id="midi-container-4">
@@ -504,7 +534,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
                     </div>
-                    <div class="small_subtitle">CN Avg. F1_score = 50.17%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CN Avg. F1_score = 50.17%</div>
                 </div>
 
                 <div class="midi-wrapper" id="midi-container-6">
@@ -528,7 +558,7 @@
         </div>
     
         <div class="dataset-title">CREPE-N0TES Improved (CNi)</div>
-    
+        <div class="subtitle_metric">Avg. F1_score = 51.28%</div>
         <!-- Group for CREPE-N0TES 2 -->
         <div class="tab-group-container"> <!-- Added wrapper for CREPE-N0TES 2 tab group -->
             <div class="tab-container">
@@ -553,7 +583,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/051.wav"></div>
                     </div>
-                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CNi Avg. F1_score = 51.28%</div>
                 </div>
                 
 
@@ -592,7 +622,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/270.wav"></div>
                     </div>
-                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CNi Avg. F1_score = 51.28%</div>
                 </div>
 
                 <div class="midi-wrapper" id="midi-container-10">
@@ -630,7 +660,7 @@
                     <div class="waveform-container">
                         <div class="waveform" data-wav-src="AMT_audio/035.wav"></div>
                     </div>
-                    <div class="small_subtitle">CNi Avg. F1_score = 51.28%</div>
+                    <div class="small_subtitle" style="visibility: hidden;">CNi Avg. F1_score = 51.28%</div>
                 </div>
 
                 <div class="midi-wrapper" id="midi-container-12">
@@ -656,17 +686,7 @@
     </section>
     
     <div class="subtitle">
-        <p style="text-align: justify;">This webpage demonstrates Automatic Music Transcription (AMT) applied to Cretan dance tunes played by the Cretan lyra. 
-            Various deep learning (DL) techniques are used for this AMT task, specifically the 
-            <b><a href="https://arxiv.org/pdf/2311.08884" target="_blank">CREPE-N0TES (CN)</a></b> and the <b>CREPE-N0TES Improved (CNi)</b> DL models.
-
-            The models are applied to three samples from the previously separated S0USTA Dataset using the <b>Mask-Inference</b> MSS model. 
-            For each model, the results are shown alongside their corresponding ground truths. 
-            Each sample’s estimation and ground truth can be accessed by switching tabs with a left click. In each media container, 
-            the MIDI estimation of the transcription is played together with the separated lyra track. 
-            There the ability to mute the lyra audio track and adjust the players’ timestamps, but only before pressing the play button for the first time. 
-            For each sample, the <b>F1_score</b> is provided, which is used to evaluate the transcription accuracy of the models.
-
+        <p style="text-align: justify;">
             The three samples demonstrate varying levels of transcription quality: one with good, one with moderate and one with poor-quality. 
             These samples are presented through tabs in ascending order of quality, from left to right. 
 
